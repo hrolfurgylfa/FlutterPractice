@@ -3,34 +3,26 @@ part 'weather.g.dart';
 
 @JsonSerializable()
 class Weather {
-  Map<String, dynamic> coord;
-  List<Map<String, dynamic>> weather;
-  String base;
-  Map<String, dynamic> main;
-  int visibility;
-  Map<String, dynamic> wind;
-  Map<String, dynamic> clouds;
-  int dt;
-  Map<String, dynamic> sys;
-  int timezone;
-  int id;
-  String name;
-  int cod;
+  Map<String, dynamic> current;
+  Map<String, dynamic> location;
+  // double temp_c;
+  // double feelslike_c;
+  // int humidity;
+  // int cloud;
+  // double wind_kph;
+  // String tz_id;
+  // String name;
 
   Weather({
-    required this.coord,
-    required this.weather,
-    required this.base,
-    required this.main,
-    required this.visibility,
-    required this.wind,
-    required this.clouds,
-    required this.dt,
-    required this.sys,
-    required this.timezone,
-    required this.id,
-    required this.name,
-    required this.cod,
+    required this.current,
+    required this.location,
+    // required this.temp_c,
+    // required this.feelslike_c,
+    // required this.humidity,
+    // required this.cloud,
+    // required this.wind_kph,
+    // required this.tz_id,
+    // required this.name,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) =>

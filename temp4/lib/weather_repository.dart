@@ -5,10 +5,10 @@ import 'package:temp4/weather.dart';
 import 'package:temp4/weather_data_provider.dart';
 
 class WeatherRepository {
-  late final WeatherDataProvider weatherDataProvider;
+  final WeatherDataProvider _weatherDataProvider = WeatherDataProvider();
   Future<Weather> getWeather(String location) async {
     final Response rawWeather =
-        await weatherDataProvider.getRawWeatherData(location);
+        await _weatherDataProvider.getRawWeatherData(location);
     final json = jsonDecode(rawWeather.body);
     final Weather weather = Weather.fromJson(json);
     return weather;

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:temp4/weather.dart';
@@ -32,20 +31,17 @@ class WeatherLoadFailure extends WeatherState {
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final _weatherRepository = WeatherRepository();
-  WeatherBloc() : super(WeatherInitial());
-
-  @override
-  Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
-    if (event is WeatherRequest) {
-      yield WeatherLoadInprogress();
+  WeatherBloc() : super(WeatherInitial()) {
+    on<WeatherRequest>((event, emit) async {
+      emit(WeatherLoadInprogress());
 
       try {
         final weatherResponse =
             await _weatherRepository.getWeather(event.cityName);
-        yield WeatherLoadSuccess(weather: weatherResponse);
+        emit(WeatherLoadSuccess(weather: weatherResponse));
       } catch (e) {
-        yield WeatherLoadFailure(error: e.toString());
+        emit(WeatherLoadFailure(error: e.toString()));
       }
-    }
+    });
   }
 }
