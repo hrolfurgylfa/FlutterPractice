@@ -1,25 +1,19 @@
-import "package:flutter/material.dart";
-import "package:flutter_bloc/flutter_bloc.dart";
-import 'package:temp4/counter_page.dart';
-import 'counter_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:temp4/weather_bloc.dart';
+import 'weather_app.dart';
 
-void main() => runApp(CounterApp());
+void main() {
+  runApp(MyApp());
+}
 
-class CounterApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => DarkModeCubit(),
-      child: BlocBuilder<DarkModeCubit, bool>(
-        builder: (context, isDarkMode) => MaterialApp(
-          theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => CounterCubit()),
-            ],
-            child: CounterPage(),
-          ),
-        ),
+      create: (context) => WeatherBloc(),
+      child: MaterialApp(
+        home: WeatherApp(),
       ),
     );
   }
