@@ -46,12 +46,12 @@ class WeatherCondition {
 @JsonSerializable()
 class WeatherInfo {
   int last_updated_epoch;
-  DateTime last_updated;
+  String last_updated;
   double temp_c;
   WeatherCondition condition;
   double wind_kph;
   int humidity;
-  int cloid;
+  int cloud;
   double feelslike_c;
 
   WeatherInfo({
@@ -61,7 +61,7 @@ class WeatherInfo {
     required this.condition,
     required this.wind_kph,
     required this.humidity,
-    required this.cloid,
+    required this.cloud,
     required this.feelslike_c,
   });
 

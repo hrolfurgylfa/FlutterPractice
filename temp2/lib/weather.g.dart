@@ -42,25 +42,25 @@ Map<String, dynamic> _$WeatherConditionToJson(WeatherCondition instance) =>
 
 WeatherInfo _$WeatherInfoFromJson(Map<String, dynamic> json) => WeatherInfo(
       last_updated_epoch: json['last_updated_epoch'] as int,
-      last_updated: DateTime.parse(json['last_updated'] as String),
+      last_updated: json['last_updated'] as String,
       temp_c: (json['temp_c'] as num).toDouble(),
       condition:
           WeatherCondition.fromJson(json['condition'] as Map<String, dynamic>),
       wind_kph: (json['wind_kph'] as num).toDouble(),
       humidity: json['humidity'] as int,
-      cloid: json['cloid'] as int,
+      cloud: json['cloud'] as int,
       feelslike_c: (json['feelslike_c'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$WeatherInfoToJson(WeatherInfo instance) =>
     <String, dynamic>{
       'last_updated_epoch': instance.last_updated_epoch,
-      'last_updated': instance.last_updated.toIso8601String(),
+      'last_updated': instance.last_updated,
       'temp_c': instance.temp_c,
       'condition': instance.condition,
       'wind_kph': instance.wind_kph,
       'humidity': instance.humidity,
-      'cloid': instance.cloid,
+      'cloud': instance.cloud,
       'feelslike_c': instance.feelslike_c,
     };
 

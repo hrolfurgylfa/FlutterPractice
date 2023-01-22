@@ -25,51 +25,58 @@ class WeatherPage extends ConsumerWidget {
             builder: (context, ref, widget) {
               final weather = ref.watch(weatherData);
               return weather.when(
-                  loading: () {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   const SnackBar(
-                    //     content: Text("Loading"),
-                    //   ),
-                    // );
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                  error: (error, stackTrace) => Center(
-                        child: Text("Something went wrong: $error\n$stackTrace"),
-                      ),
-                  data: (data) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                loading: () {
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   const SnackBar(
+                  //     content: Text("Loading"),
+                  //   ),
+                  // );
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                error: (error, stackTrace) => Center(
+                  child: Text("Something went wrong: $error\n$stackTrace"),
+                ),
+                data: (data) {
+                  if (data == null) {
+                    return const Text("Location not found.");
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                Image.network(data.current.condition.icon),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  data.location.name,
-                                  style: Theme.of(context).textTheme.headline3,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  (data.current.temp_c).toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
-                                ),
-                              ],
+                            Image.network(
+                                "https:${data.current.condition.icon}"),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              data.location.name,
+                              style: Theme.of(context).textTheme.headline3,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              data.current.temp_c.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
                             ),
                           ],
                         ),
-                      ));
+                      ],
+                    ),
+                  );
+                },
+              );
             },
           ),
           ElevatedButton(
