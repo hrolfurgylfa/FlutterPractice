@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:temp2/home.dart';
+import 'package:temp2/weather_page.dart';
 
 // A Counter example implemented with riverpod
 
@@ -29,7 +30,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = ref.watch(isDarkThemeProvider);
     return MaterialApp(
-        home: Home(),
+        home: WeatherPage(),
         theme: ThemeData(
             brightness: isDarkTheme ? Brightness.dark : Brightness.light));
   }
