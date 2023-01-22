@@ -35,8 +35,8 @@ class WeatherPage extends ConsumerWidget {
                       child: CircularProgressIndicator(),
                     );
                   },
-                  error: (a, b) => Center(
-                        child: Text("Something went wrong: ${weather.error}"),
+                  error: (error, stackTrace) => Center(
+                        child: Text("Something went wrong: $error\n$stackTrace"),
                       ),
                   data: (data) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -45,22 +45,19 @@ class WeatherPage extends ConsumerWidget {
                           children: [
                             Column(
                               children: [
-                                const Icon(
-                                  Icons.sunny,
-                                  size: 64,
-                                ),
+                                Image.network(data.current.condition.icon),
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
-                                  data.location["name"],
+                                  data.location.name,
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
-                                  (data.current["temp_c"] as double).toString(),
+                                  (data.current.temp_c).toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline4!
@@ -78,8 +75,11 @@ class WeatherPage extends ConsumerWidget {
           ElevatedButton(
             child: const Text("Get Weather"),
             onPressed: () {
-              // if (_cityController.text.isNotEmpty) {
-              ref.read(weatherLocation.notifier).setLocation(_cityController.text);
+              if (_cityController.text.isNotEmpty) {
+                ref
+                    .read(weatherLocation.notifier)
+                    .setLocation(_cityController.text);
+              }
             },
           ),
         ],
