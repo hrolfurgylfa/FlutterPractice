@@ -13,14 +13,8 @@ class WeatherPage extends ConsumerWidget {
         centerTitle: true,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
-            controller: _cityController,
-            decoration: const InputDecoration(
-              hintText: "Enter city name",
-              border: OutlineInputBorder(),
-            ),
-          ),
           Consumer(
             builder: (context, ref, widget) {
               final weather = ref.watch(weatherData);
@@ -62,7 +56,7 @@ class WeatherPage extends ConsumerWidget {
                               height: 5,
                             ),
                             Text(
-                              data.current.temp_c.toString(),
+                              "${data.current.temp_c}°C",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4!
@@ -79,15 +73,52 @@ class WeatherPage extends ConsumerWidget {
               );
             },
           ),
-          ElevatedButton(
-            child: const Text("Get Weather"),
-            onPressed: () {
-              if (_cityController.text.isNotEmpty) {
-                ref
-                    .read(weatherLocation.notifier)
-                    .setLocation(_cityController.text);
-              }
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 500),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _cityController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter city name",
+                        border: OutlineInputBorder(),
+                      ),
+                      onFieldSubmitted: (value) {
+                        if (value.isNotEmpty) {
+                          ref.read(weatherLocation.notifier).setLocation(value);
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        child: Text(
+                          "Get Weather",
+                          style: Theme.of(context)
+                              .textTheme
+                              .button!
+                              .copyWith(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          if (_cityController.text.isNotEmpty) {
+                            ref
+                                .read(weatherLocation.notifier)
+                                .setLocation(_cityController.text);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),
